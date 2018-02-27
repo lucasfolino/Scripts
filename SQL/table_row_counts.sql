@@ -6,4 +6,4 @@ WHERE A.type = 'U'
 GROUP BY A.schema_id,
          A.Name
 	    ORDER BY SUM(B.rows) DESC
-GO 
+GO
