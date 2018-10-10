@@ -1,9 +1,13 @@
-SELECT SCHEMA_NAME(A.schema_id)+'.'+A.Name AS TableName,
-       SUM(B.rows) AS 'RowCount'
-FROM sys.objects A
-     INNER JOIN sys.partitions B ON A.object_id = B.object_id
-WHERE A.type = 'U'
-GROUP BY A.schema_id,
-         A.Name
-	    ORDER BY SUM(B.rows) DESC
-GO
+--https://stackoverflow.com/questions/2221555/how-to-fetch-the-row-count-for-all-tables-in-a-sql-server-database
+
+SELECT t.name, FORMAT(s.row_count,'N0') as rows from sys.tables t
+JOIN sys.dm_db_partition_stats s
+ON t.object_id = s.object_id
+AND t.type_desc = 'USER_TABLE'
+--AND t.name not like '%dss%'
+AND s.index_id IN (0,1)
+ORDER BY row_count DESC
+
+
+
+
