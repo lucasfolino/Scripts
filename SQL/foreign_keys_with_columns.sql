@@ -16,4 +16,4 @@ FROM sys.foreign_key_columns fkc
      INNER JOIN sys.columns col2 ON col2.column_id = referenced_column_id
                                     AND col2.object_id = tab2.object_id
     INNER JOIN sys.foreign_keys fk ON obj.object_id = fk.object_id
-ORDER BY FK_NAME;
+ORDER BY referenced_column
